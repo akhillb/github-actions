@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const ActionInput = require('./actionInput');
+const { isPost } = require('./stateHelper');
 
 /**
  * Entry point to initiate the Action.
@@ -15,4 +16,12 @@ const run = async () => {
   }
 };
 
-run();
+const cleanup = async () => {
+  core.info('Starting cleanup job');
+}
+
+if (!isPost) {
+  run();
+} else {
+  cleanup();
+}

@@ -20,7 +20,12 @@ const run = async () => {
 
 const cleanup = async () => {
   core.info('Starting cleanup job');
-  core.info(`Status is ${github.context.job.status}`);
+  const exitCode = process.exitCode;
+  if (typeof exitCode === 'undefined' || exitCode === 0) {
+    core.info('Status passed');
+  } else {
+    core.info('Status failed');
+  }
 };
 
 if (!ActionState.isPostCleanupJob()) {

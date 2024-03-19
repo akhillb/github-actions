@@ -18,7 +18,7 @@ const run = async () => {
 
 const cleanup = async () => {
   core.info('Starting cleanup job');
-}
+};
 
 if (!isPost) {
   run();

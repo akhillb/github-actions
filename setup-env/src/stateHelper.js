@@ -1,3 +1,7 @@
 const core = require('@actions/core');
 
-export const IsPost = !!core.getState('isPost');
+const isPost = !!core.getState('isPost');
+
+module.exports = {
+  isPost,
+};

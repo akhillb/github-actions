@@ -18,6 +18,10 @@ module.exports = {
     BROWSERSTACK_BUILD_NAME: 'BROWSERSTACK_BUILD_NAME',
     BROWSERSTACK_PROJECT_NAME: 'BROWSERSTACK_PROJECT_NAME',
   },
+
+  ACTION_STATE_VARS: {
+    SETUP_ENV_JOB_STARTED: 'BROWSERSTACK_SETUP_ENV_JOB_STARTED',
+  },
 };
 
 
@@ -6032,6 +6036,35 @@ module.exports = InputValidator;
 
 /***/ }),
 
+/***/ 182:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(186);
+const constants = __nccwpck_require__(468);
+
+const {
+  ACTION_STATE_VARS,
+} = constants;
+
+class ActionState {
+  static _getJobStartedState() {
+    return core.getState(ACTION_STATE_VARS.SETUP_ENV_JOB_STARTED);
+  }
+
+  static markJobStarted() {
+    core.saveState(ACTION_STATE_VARS.SETUP_ENV_JOB_STARTED, 'true');
+  }
+
+  static isPostCleanupJob() {
+    return !!this._getJobStartedState();
+  }
+}
+
+module.exports = ActionState;
+
+
+/***/ }),
+
 /***/ 877:
 /***/ ((module) => {
 
@@ -6187,6 +6220,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(186);
 const ActionInput = __nccwpck_require__(426);
+const ActionState = __nccwpck_require__(182);
 
 /**
  * Entry point to initiate the Action.
@@ -6195,6 +6229,7 @@ const ActionInput = __nccwpck_require__(426);
  */
 const run = async () => {
   try {
+    ActionState.markJobStarted();
     const inputParser = new ActionInput();
     inputParser.setEnvVariables();
   } catch (e) {
@@ -6202,7 +6237,15 @@ const run = async () => {
   }
 };
 
-run();
+const cleanup = async () => {
+  core.info('Starting cleanup job');
+};
+
+if (!ActionState.isPostCleanupJob()) {
+  run();
+} else {
+  cleanup();
+}
 
 })();
 

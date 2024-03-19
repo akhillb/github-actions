@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const github = require('@actions/github');
 const ActionInput = require('./actionInput');
 const ActionState = require('./actionState');
 
@@ -19,6 +20,7 @@ const run = async () => {
 
 const cleanup = async () => {
   core.info('Starting cleanup job');
+  core.info(`Status is ${github.context.job.status}`);
 };
 
 if (!ActionState.isPostCleanupJob()) {

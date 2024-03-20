@@ -20,7 +20,7 @@ const run = async () => {
 
 const cleanup = async () => {
   core.info('Starting cleanup job');
-  core.info(JSON.stringify(process.env.GITHUB_TOKEN));
+  core.info(JSON.stringify(process.env));
 };
 
 if (!ActionState.isPostCleanupJob()) {

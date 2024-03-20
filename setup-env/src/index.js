@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
 const ActionInput = require('./actionInput');
 const ActionState = require('./actionState');
 
@@ -20,7 +19,8 @@ const run = async () => {
 
 const cleanup = async () => {
   core.info('Starting cleanup job');
-  const exitCode = process.exitCode;
+  const { exitCode } = process;
+  core.info(`Process exit code: ${exitCode}`);
   if (typeof exitCode === 'undefined' || exitCode === 0) {
     core.info('Status passed');
   } else {

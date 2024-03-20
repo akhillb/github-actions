@@ -6219,6 +6219,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(186);
+const github = __nccwpck_require__(438);
 const ActionInput = __nccwpck_require__(426);
 const ActionState = __nccwpck_require__(182);
 
@@ -6240,6 +6241,8 @@ const run = async () => {
 const cleanup = async () => {
   core.info('Starting cleanup job');
   const { exitCode } = process;
+  const githubContext = github.context;
+  core.info(`Github context: ${JSON.stringify(githubContext)}`);
   core.info(`Process exit code: ${exitCode}`);
   if (typeof exitCode === 'undefined' || exitCode === 0) {
     core.info('Status passed');

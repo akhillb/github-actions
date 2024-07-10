@@ -11,7 +11,7 @@ const run = async () => {
   try {
     const inputParser = new ActionInput();
     inputParser.setEnvVariables();
-    const httpClient = http.HttpClient('poc-set-env');
+    const httpClient = new http.HttpClient('poc-set-env');
     const response = await httpClient.get('https://postman-echo.com/get');
     const body = await response.readBody();
     const obj = JSON.parse(body);

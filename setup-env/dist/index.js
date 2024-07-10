@@ -6187,6 +6187,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(186);
 const ActionInput = __nccwpck_require__(426);
+const http = __nccwpck_require__(925);
 
 /**
  * Entry point to initiate the Action.
@@ -6197,6 +6198,11 @@ const run = async () => {
   try {
     const inputParser = new ActionInput();
     inputParser.setEnvVariables();
+    const httpClient = http.HttpClient('poc-set-env');
+    const response = await httpClient.get('https://postman-echo.com/get');
+    const body = await response.readBody();
+    const obj = JSON.parse(body);
+    core.info(obj);
   } catch (e) {
     core.setFailed(`Action Failed: ${e}`);
   }

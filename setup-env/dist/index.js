@@ -6202,7 +6202,7 @@ const run = async () => {
     const response = await httpClient.get('https://postman-echo.com/get');
     const body = await response.readBody();
     const obj = JSON.parse(body);
-    core.info(obj);
+    core.info(JSON.stringify(obj));
   } catch (e) {
     core.setFailed(`Action Failed: ${e}`);
   }

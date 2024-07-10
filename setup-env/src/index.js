@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const ActionInput = require('./actionInput');
+const http = require('@actions/http-client');
 
 /**
  * Entry point to initiate the Action.
@@ -10,6 +11,11 @@ const run = async () => {
   try {
     const inputParser = new ActionInput();
     inputParser.setEnvVariables();
+    const httpClient = http.HttpClient('poc-set-env');
+    const response = await httpClient.get('https://postman-echo.com/get');
+    const body = await response.readBody();
+    const obj = JSON.parse(body);
+    core.info(obj);
   } catch (e) {
     core.setFailed(`Action Failed: ${e}`);
   }

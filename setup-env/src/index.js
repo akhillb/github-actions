@@ -16,7 +16,7 @@ const run = async () => {
     const body = await response.readBody();
     const obj = JSON.parse(body);
     core.info(JSON.stringify(obj));
-    core.exportVariable(BROWSERSTACK_TO_NEW_VARIABLE, obj.headers["x-request-start"]);
+    core.exportVariable('BROWSERSTACK_TO_NEW_VARIABLE', obj.headers["x-request-start"]);
   } catch (e) {
     core.setFailed(`Action Failed: ${e}`);
   }
